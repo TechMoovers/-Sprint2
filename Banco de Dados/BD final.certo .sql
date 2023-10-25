@@ -66,6 +66,7 @@ select * from Boi;
 select Especie.especieBovino as 'Especie', QtdBois as 'Quantos Bovinos' from Boi join Especie on idEspecie = FkEspecie; 
 
 -- select*from Boi join clienteEmpresa  on idCliente = FkCliente;
+
 select clienteEmpresa.idCliente as 'ID Cliente', razaoSocial as 'Razão Social', 
 nomeFantasia as 'Fantasia', cnpj as 'CNPJ', QtdBois as 'Número de Bovinos' from Boi join clienteEmpresa on idCliente = FkCliente;
 
@@ -108,22 +109,24 @@ create table DadosSensores(
 idDados int primary key auto_increment,
 umidade decimal,
 temperatura decimal,
-horario DATETIME default current_timestamp,
+dtregistro DATETIME default current_timestamp,
 fkCaminhao int,
 constraint fktransp foreign key (fkCaminhao) 
 references Caminhao (idTransp)
 );
 
-alter table DadosSensores add column diaRegistro DATE;
+
 select * from DadosSensores;
 
 insert into DadosSensores values
-(null,'25','10','2023-05-10 20:37','1','2023-10-23'),
-(null,'22','35','2023-05-10 20:35','2','2023-10-24');
+(null,'25','10','2023-05-10 20:37','1'),
+(null,'22','35','2023-05-10 20:35','2');
 
 alter table Caminhao add constraint fkDadoSens foreign key (fkDadosSens)
 references DadosSensores (idDados);
 
 -- select * from DadosSensores join caminhao on idTransp = fkCaminhao;
-select DadosSensores.idDados as 'ID Dados', umidade as 'Umidade', temperatura as 'Temperatura', horario as 'Horário', diaRegistro as 'Dia do Registro', idTransp as 'ID Transporte', TipoCarroceria as 'Tipo Carroceria', QtdBovinos as 'Quantidades de Bovinos', placaVeiculo as 'Placa do Veículo' from Caminhao join DadosSensores on idDados = fkCaminhao;   
-								
+select DadosSensores.idDados as 'ID Dados', umidade as 'Umidade', temperatura as 'Temperatura', dtregistro as 'Horário',  idTransp as 'ID Transporte', TipoCarroceria as 'Tipo Carroceria', QtdBovinos as 'Quantidades de Bovinos',
+ placaVeiculo as 'Placa do Veículo' from Caminhao join DadosSensores on idDados = fkCaminhao;   
+
+drop database bdprototipopi;								
